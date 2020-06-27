@@ -12,7 +12,7 @@ namespace Maersk.Movies.Data
            : base(options)
         {
         }
-        public DbSet<MovieLocations> ListsMovieLocations { get; set; }
+        public DbSet<MovieLocation> ListsMovieLocations { get; set; }
 
     }
 

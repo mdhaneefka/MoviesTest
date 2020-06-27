@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Maersk.Movies.Domain.Models
 {
-    public class MovieLocations : BaseEntity
+    public class MovieLocation : BaseEntity
     {
         /// <summary>
         /// Title

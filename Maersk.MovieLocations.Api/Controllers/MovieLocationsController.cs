@@ -37,9 +37,11 @@ namespace Maersk.MovieLocations.Api.Controllers
         public IActionResult GetMovieLocations([FromQuery] PageParameters pageParameters, string SearchBy = "", string SearchByValue = "")
         {
             SeedAndCacheDataWhenFirstRequestComes();
+            List<MovieLocation> resultCollections = null;
             var results = _movieLocationsQueries.GetMovieLocationsAsync(pageParameters); //seed should be place in separate class,insert data whne invoke soultion 
             if (results != null)
             {
+                resultCollections = new List<MovieLocation>();
                 List<GridHelper.Filter> filters = new List<GridHelper.Filter>();
                 GridHelper.Filter gridHelper = new GridHelper.Filter();
                 gridHelper.PropertyName = SearchBy;
@@ -47,14 +49,14 @@ namespace Maersk.MovieLocations.Api.Controllers
                 gridHelper.Operator = GridHelper.Operator.Contains;
                 filters.Add(gridHelper);
                 var filterExpression = ExpressionBuilder.GetExpression<MovieLocation>(filters);
-                var resultCollections = _context.ListsMovieLocations.Where(filterExpression).ToList();
+                 resultCollections = _context.ListsMovieLocations.Where(filterExpression).ToList();
 
                 //string selectStatement = "new ( " + SearchBy + ")";    //as per the scnerio need to get all rows match with value
                 //var _filterResults = _context.ListsMovieLocations.Select(selectStatement);
                 //_context.ListsMovieLocations.Where(x=>)
 
             }
-            return Ok(results);
+            return Ok(resultCollections);
 
 
 

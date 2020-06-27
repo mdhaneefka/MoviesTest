@@ -33,9 +33,9 @@ namespace Maersk.MovieLocations.Api
             {
                 options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title = "Place Info Service API",
+                    Title = "Moviw Location API",
                     Version = "v2",
-                    Description = "Sample service for Learner",
+                    Description = "Service For Filter Movies Dara",
                 });
             });
             //services.AddMvc()
@@ -63,7 +63,7 @@ namespace Maersk.MovieLocations.Api
            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseSwagger();
-            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "PlaceInfo Services"));
+            app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Movie Info Services"));
 
             //   app.UseAuthorization();
             //app.UseEndpoints(endpoints =>

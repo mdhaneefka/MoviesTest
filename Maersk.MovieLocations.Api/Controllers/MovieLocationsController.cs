@@ -17,6 +17,7 @@ using System.Reflection;
 using System.ComponentModel;
 using Maersk.Movies.Application.Dto;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Maersk.MovieLocations.Api.Controllers
 {
@@ -38,31 +39,36 @@ namespace Maersk.MovieLocations.Api.Controllers
         [HttpPost]
         public IActionResult GetMovieLocations(MovieLocationsDto movieLocationRequest)
         {
-            SeedAndCacheDataWhenFirstRequestComes();  // need to go infracture
-            List<MovieLocation> resultCollections = null;
-            //Refeactoring After UI Changes to get paging
-            //var results = _movieLocationsQueries.GetMovieLocationsAsync(movieLocationRequest.pageParameters); //seed should be place in separate class,insert data whne invoke soultion 
-            //if (results != null)
-            //{
-                resultCollections = new List<MovieLocation>();
-                List<GridHelper.Filter> filters = new List<GridHelper.Filter>();
-                GridHelper.Filter gridHelper = new GridHelper.Filter();
-                gridHelper.PropertyName = movieLocationRequest.SearchBy;
-                gridHelper.Value = movieLocationRequest.SearchByValue;
-                if(!string.IsNullOrEmpty(movieLocationRequest.SearchByFilter))
-                   gridHelper.Operator = GridHelper.Operator.Contains;   //set it only for Single Contain to work 
-                filters.Add(gridHelper);
-                var filterExpression = ExpressionBuilder.GetExpression<MovieLocation>(filters);
-                 resultCollections = _context.ListsMovieLocations.Where(filterExpression).ToList();
+            SeedAndCacheDataWhenFirstRequestComes();  // need to go infracture Layer
+                                                      //seed should be place in separate class,insert data whne invoke soultion 
+            //Refeactoring After UI Changes
+            IEnumerable<MovieLocation> results = null;
+            if (ModelState.IsValid)
+            {
+                results =  _movieLocationsQueries.GetMovieLocationsAsync(movieLocationRequest);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+            return results == null ? (IActionResult)NotFound() : Ok(results);
 
-                //string selectStatement = "new ( " + SearchBy + ")";    //as per the scnerio need to get all rows match with value
-                //var _filterResults = _context.ListsMovieLocations.Select(selectStatement);
-                //_context.ListsMovieLocations.Where(x=>)
+            #region  Moved code to Application Layer  as per refactorization
 
-            //}
-            return Ok(resultCollections);
+            // List<MovieLocation> resultCollections = null;
+            //resultCollections = new List<MovieLocation>();
+            //List<GridHelper.Filter> filters = new List<GridHelper.Filter>();
+            //GridHelper.Filter gridHelper = new GridHelper.Filter();
+            //gridHelper.PropertyName = movieLocationRequest.SearchBy;
+            //gridHelper.Value = movieLocationRequest.SearchByValue;
+            //if (!string.IsNullOrEmpty(movieLocationRequest.SearchByFilter))
+            //    gridHelper.Operator = GridHelper.Operator.Contains;   //set it only for Single Contain to work 
+            //filters.Add(gridHelper);
+            //var filterExpression = ExpressionBuilder.GetExpression<MovieLocation>(filters);
+            //resultCollections = _context.ListsMovieLocations.Where(filterExpression).ToList();
+            //return Ok(resultCollections);
 
-
+            #endregion
 
 
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Maersk.Movies.Application.Persistenance
@@ -21,16 +22,31 @@ namespace Maersk.Movies.Application.Persistenance
             _db = db;
         }
 
-        public PagedList<MovieLocation> GetMovieLocationsAsync(PageParameters pageParameters)
+        public IEnumerable<MovieLocation> GetMovieLocationsAsync(MovieLocationsDto movieLocationsDto)
         {
-            return PagedList<MovieLocation>
-                                .Create(GetQueryableLibraries(), pageParameters.PageNumber, pageParameters.PageSize);
+            List<MovieLocation> resultCollections = null;
+            try
+            {
+
+                resultCollections = new List<MovieLocation>();
+                List<GridHelper.Filter> filters = new List<GridHelper.Filter>();
+                GridHelper.Filter gridHelper = new GridHelper.Filter();
+                gridHelper.PropertyName = movieLocationsDto.SearchBy;
+                gridHelper.Value = movieLocationsDto.SearchByValue;
+                if (!string.IsNullOrEmpty(movieLocationsDto.SearchByFilter))
+                    gridHelper.Operator = GridHelper.Operator.Contains;   //set it only for Single Contain to work 
+                filters.Add(gridHelper);
+                var filterExpression = ExpressionBuilder.GetExpression<MovieLocation>(filters);
+                resultCollections = _db.ListsMovieLocations.Where(filterExpression).ToList();
+            }
+            catch(Exception ex)
+            {
+                Console.Error.WriteLine("Error occuered:"+ ex.Message.ToString());
+            }
+            return resultCollections;
         }
 
-        public async System.Threading.Tasks.Task<MovieLocation> GetMovieLocationsAsync(System.Linq.Expressions.Expression<Func<MovieLocation, bool>> predicate)
-            => await GetQueryableLibraries().Where(predicate).FirstOrDefaultAsync();
-
-        private IQueryable<MovieLocation> GetQueryableLibraries()
+        private IQueryable<MovieLocation> GetQueryableLibraries(MovieLocationsDto movieLocationsDto)
         {
             return (from lst in _db.ListsMovieLocations
                     select new MovieLocation

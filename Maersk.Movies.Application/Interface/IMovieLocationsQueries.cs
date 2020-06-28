@@ -11,7 +11,7 @@ namespace Maersk.Movies.Application.Interface
 {
 	public interface IMovieLocationsQueries
 	{
-		PagedList<MovieLocation> GetMovieLocationsAsync(PageParameters pageParameters);
-		Task<MovieLocation> GetMovieLocationsAsync(Expression<Func<MovieLocation, bool>> predicate);
+		IEnumerable<MovieLocation> GetMovieLocationsAsync(MovieLocationsDto movieLocationRequest);
+
 	}
 }

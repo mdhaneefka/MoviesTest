@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Maersk.MovieLocations.Api.Filters;
 using Maersk.Movies.Application.Interface;
 using Maersk.Movies.Application.Persistenance;
 using Maersk.Movies.Data;
@@ -29,6 +30,7 @@ namespace Maersk.MovieLocations.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+           // services.AddControllersWithViews(options => options.Filters.Add(new ApiExceptionFilter())); // need to test
             services.AddCors(options =>
             {
                 options.AddPolicy("CORSPolicy", corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin()

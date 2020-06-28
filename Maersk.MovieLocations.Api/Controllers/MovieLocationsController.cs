@@ -15,12 +15,14 @@ using System.Runtime.CompilerServices;
 using System.Data;
 using System.Reflection;
 using System.ComponentModel;
-
+using Maersk.Movies.Application.Dto;
+using Microsoft.AspNetCore.Cors;
 
 namespace Maersk.MovieLocations.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors("CORSPolicy")]
     public class MovieLocationsController : ControllerBase
     {
         private readonly IMovieLocationsQueries _movieLocationsQueries;
@@ -33,20 +35,22 @@ namespace Maersk.MovieLocations.Api.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult GetMovieLocations([FromQuery] PageParameters pageParameters, string SearchBy = "", string SearchByValue = "")
+        [HttpPost]
+        public IActionResult GetMovieLocations(MovieLocationsDto movieLocationRequest)
         {
-            SeedAndCacheDataWhenFirstRequestComes();
+            SeedAndCacheDataWhenFirstRequestComes();  // need to go infracture
             List<MovieLocation> resultCollections = null;
-            var results = _movieLocationsQueries.GetMovieLocationsAsync(pageParameters); //seed should be place in separate class,insert data whne invoke soultion 
-            if (results != null)
-            {
+            //Refeactoring After UI Changes to get paging
+            //var results = _movieLocationsQueries.GetMovieLocationsAsync(movieLocationRequest.pageParameters); //seed should be place in separate class,insert data whne invoke soultion 
+            //if (results != null)
+            //{
                 resultCollections = new List<MovieLocation>();
                 List<GridHelper.Filter> filters = new List<GridHelper.Filter>();
                 GridHelper.Filter gridHelper = new GridHelper.Filter();
-                gridHelper.PropertyName = SearchBy;
-                gridHelper.Value = SearchByValue;
-                gridHelper.Operator = GridHelper.Operator.Contains;
+                gridHelper.PropertyName = movieLocationRequest.SearchBy;
+                gridHelper.Value = movieLocationRequest.SearchByValue;
+                if(!string.IsNullOrEmpty(movieLocationRequest.SearchByFilter))
+                   gridHelper.Operator = GridHelper.Operator.Contains;   //set it only for Single Contain to work 
                 filters.Add(gridHelper);
                 var filterExpression = ExpressionBuilder.GetExpression<MovieLocation>(filters);
                  resultCollections = _context.ListsMovieLocations.Where(filterExpression).ToList();
@@ -55,7 +59,7 @@ namespace Maersk.MovieLocations.Api.Controllers
                 //var _filterResults = _context.ListsMovieLocations.Select(selectStatement);
                 //_context.ListsMovieLocations.Where(x=>)
 
-            }
+            //}
             return Ok(resultCollections);
 
 
@@ -122,6 +126,7 @@ namespace Maersk.MovieLocations.Api.Controllers
                     Title = "Yours, Mine and Ours",
                     ReleaseYear = 1968,
                     FunFacts = "",
+                    Locations="",
                     ProductionCompany = "Desilu Productions",
                     Distributor = "United Artists",
                     Director = "Melville Shavelson",
@@ -131,6 +136,54 @@ namespace Maersk.MovieLocations.Api.Controllers
                     Actor3 = "Van Johnson"
                 };
                 _context.ListsMovieLocations.Add(movieLocations1);
+                var movieLocations3 = new Maersk.Movies.Domain.Models.MovieLocation
+                {
+                    Id = 3,
+                    Title = "180",
+                    ReleaseYear = 2011,
+                    FunFacts = "",
+                    Locations = "Epic Roasthouse (399 Embarcadero)",
+                    ProductionCompany = "SPI Cinemas",
+                    Distributor = "United Artists",
+                    Director = "Jayendra",
+                    Writer = "Umarji Anuradha",
+                    Actor1 = "Siddarth",
+                    Actor2 = "Nithya Menon",
+                    Actor3 = "Priya Anand"
+                };
+                _context.ListsMovieLocations.Add(movieLocations3);
+                var movieLocations4 = new Maersk.Movies.Domain.Models.MovieLocation
+                {
+                    Id = 4,
+                    Title = "180",
+                    ReleaseYear = 2011,
+                    FunFacts = "",
+                    Locations = "City Hall",
+                    ProductionCompany = "SPI Cinemas",
+                    Distributor = "United Artists",
+                    Director = "Jayendra",
+                    Writer = "Umarji Anuradha",
+                    Actor1 = "Siddarth",
+                    Actor2 = "Nithya Menon",
+                    Actor3 = "Priya Anand"
+                };
+                _context.ListsMovieLocations.Add(movieLocations4);
+                var movieLocations5 = new Maersk.Movies.Domain.Models.MovieLocation
+                {
+                    Id = 5,
+                    Title = "180",
+                    ReleaseYear = 2011,
+                    FunFacts = "",
+                    Locations = "Polk & Larkin Streets",
+                    ProductionCompany = "SPI Cinemas",
+                    Distributor = "United Artists",
+                    Director = "Jayendra",
+                    Writer = "Umarji Anuradha",
+                    Actor1 = "Siddarth",
+                    Actor2 = "Nithya Menon",
+                    Actor3 = "Priya Anand"
+                };
+                _context.ListsMovieLocations.Add(movieLocations5);
                 _context.SaveChangesAsync();
 
             }

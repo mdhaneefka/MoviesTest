@@ -3,6 +3,7 @@ using Maersk.Movies.Application.Helpers;
 using Maersk.Movies.Application.Interface;
 using Maersk.Movies.Data;
 using Maersk.Movies.Domain;
+using Maersk.Movies.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,19 @@ namespace Maersk.Movies.Application.Persistenance
             _db = db;
         }
 
-        public PagedList<MovieLocationsDto> GetMovieLocationsAsync(PageParameters pageParameters)
+        public PagedList<MovieLocation> GetMovieLocationsAsync(PageParameters pageParameters)
         {
-            return PagedList<MovieLocationsDto>
+            return PagedList<MovieLocation>
                                 .Create(GetQueryableLibraries(), pageParameters.PageNumber, pageParameters.PageSize);
         }
 
-        public async System.Threading.Tasks.Task<MovieLocationsDto> GetMovieLocationsAsync(System.Linq.Expressions.Expression<Func<MovieLocationsDto, bool>> predicate)
+        public async System.Threading.Tasks.Task<MovieLocation> GetMovieLocationsAsync(System.Linq.Expressions.Expression<Func<MovieLocation, bool>> predicate)
             => await GetQueryableLibraries().Where(predicate).FirstOrDefaultAsync();
 
-        private IQueryable<MovieLocationsDto> GetQueryableLibraries()
+        private IQueryable<MovieLocation> GetQueryableLibraries()
         {
             return (from lst in _db.ListsMovieLocations
-                    select new MovieLocationsDto
+                    select new MovieLocation
                     {   Id= lst.Id,
                         Title = lst.Title,
                         ReleaseYear = lst.ReleaseYear,

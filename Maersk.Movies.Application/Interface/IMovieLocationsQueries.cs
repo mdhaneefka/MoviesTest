@@ -1,5 +1,6 @@
 ﻿using Maersk.Movies.Application.Dto;
 using Maersk.Movies.Application.Helpers;
+using Maersk.Movies.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ namespace Maersk.Movies.Application.Interface
 {
 	public interface IMovieLocationsQueries
 	{
-		PagedList<MovieLocationsDto> GetMovieLocationsAsync(PageParameters pageParameters);
-		Task<MovieLocationsDto> GetMovieLocationsAsync(Expression<Func<MovieLocationsDto, bool>> predicate);
+		PagedList<MovieLocation> GetMovieLocationsAsync(PageParameters pageParameters);
+		Task<MovieLocation> GetMovieLocationsAsync(Expression<Func<MovieLocation, bool>> predicate);
 	}
 }

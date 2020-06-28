@@ -29,19 +29,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movies", "Movies", "{D426C683-6105-4FF4-B3C7-968E9227C710}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maersk.MovieLocations.Api", "Maersk.MovieLocations.Api\Maersk.MovieLocations.Api.csproj", "{C046E45E-4791-434C-A1E8-D7A4CD502F0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maersk.MovieLocations.Api", "Maersk.MovieLocations.Api\Maersk.MovieLocations.Api.csproj", "{C046E45E-4791-434C-A1E8-D7A4CD502F0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.UnitTest", "Domain.UnitTest\Domain.UnitTest.csproj", "{39E953D9-3E75-489D-A580-72110F1C158C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTest", "Domain.UnitTest\Domain.UnitTest.csproj", "{39E953D9-3E75-489D-A580-72110F1C158C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.TestCase", "Application.TestCase\Application.TestCase.csproj", "{B1FFA995-5B19-4127-A0CF-163108DE81BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.TestCase", "Application.TestCase\Application.TestCase.csproj", "{B1FFA995-5B19-4127-A0CF-163108DE81BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.TestCase", "Infrastructure.TestCase\Infrastructure.TestCase.csproj", "{1A3A25C1-7A03-46EA-AD0C-8BFF3792FF49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.TestCase", "Infrastructure.TestCase\Infrastructure.TestCase.csproj", "{1A3A25C1-7A03-46EA-AD0C-8BFF3792FF49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.TestCases", "Data.TestCases\Data.TestCases.csproj", "{14B4A3CF-4A8F-455F-ACDB-69628746A1D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.TestCases", "Data.TestCases\Data.TestCases.csproj", "{14B4A3CF-4A8F-455F-ACDB-69628746A1D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.TestCase", "Api.TestCase\Api.TestCase.csproj", "{A8F8320E-14B9-4F94-A2AB-21C978AFEBE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TestCase", "Api.TestCase\Api.TestCase.csproj", "{A8F8320E-14B9-4F94-A2AB-21C978AFEBE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maersk.Movies.Infrastructure", "Maersk.Movies.Infrastructure\Maersk.Movies.Infrastructure.csproj", "{ED45C2F2-AC80-47C7-A388-FB701715C233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maersk.Movies.Infrastructure", "Maersk.Movies.Infrastructure\Maersk.Movies.Infrastructure.csproj", "{ED45C2F2-AC80-47C7-A388-FB701715C233}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MoviesDashBoard", "MoviesDashBoard", "{00D701E1-3ADB-4D8B-BDB8-D5653C2FA9C5}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +117,7 @@ Global
 		{14B4A3CF-4A8F-455F-ACDB-69628746A1D1} = {5B142A5E-E636-451E-B099-148C92C534F9}
 		{A8F8320E-14B9-4F94-A2AB-21C978AFEBE3} = {5B142A5E-E636-451E-B099-148C92C534F9}
 		{ED45C2F2-AC80-47C7-A388-FB701715C233} = {57DDA21C-2578-4584-8F6B-7815F45C0E3B}
+		{00D701E1-3ADB-4D8B-BDB8-D5653C2FA9C5} = {C4477B26-7556-463B-A2DA-CE06C0000813}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {48953B2C-E8BC-4501-97F5-5876EADB1DC2}

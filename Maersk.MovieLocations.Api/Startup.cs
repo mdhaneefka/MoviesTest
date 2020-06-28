@@ -29,6 +29,17 @@ namespace Maersk.MovieLocations.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy", corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin()
+                    /* Apply CORS policy for any type of origin */
+                    .AllowAnyMethod()
+                    /* Apply CORS policy for any type of http methods  */
+                    .AllowAnyHeader());
+                    /* Apply CORS policy for any headers */
+                   // .AllowCredentials());
+                /* Apply CORS policy for all users  */
+            });
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -60,12 +71,13 @@ namespace Maersk.MovieLocations.Api
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-           
+            app.UseCors("CORSPolicy");
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "Movie Info Services"));
-
-            //   app.UseAuthorization();
+           
+            
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllers();
